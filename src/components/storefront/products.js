@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Container } from "@material-ui/core";
-import { spacing } from "@material-ui/system";
 
+//Material ui
+//Grid
 import { Grid } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
+import { Container } from "@material-ui/core";
+import { spacing } from "@material-ui/system";
 
 // For card
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,6 +17,10 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+
+//action
+import { addProduct } from "../../store/cart";
+
 
 const useStyles = makeStyles({
   media: {
@@ -63,7 +69,11 @@ const Products = (props) => {
                       </CardContent>
                     </CardActionArea>
                     <CardActions>
-                      <Button size="small" className={classes.addCart}>
+                      <Button 
+                      size="small" 
+                      className={classes.addCart}
+                      onClick={() => props.addProduct(product)}
+                      >
                         ADD TO CART
                       </Button>
                       <Button size="small" className={classes.viewDetails}>
@@ -85,4 +95,6 @@ const mapStateToProps = (state) => ({
   active: state.categories.active,
 });
 
-export default connect(mapStateToProps)(Products);
+const mapDispatchToProps = { addProduct };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
