@@ -1,8 +1,8 @@
 let initalState = {
   categories: [
-    { name: "food", displayName: "food", description: "" },
-    { name: "elctronics", displayName: "elctronics", description: "" },
-    { name: "fasion", displayName: "fasion", description: "" },
+    { name: "food", displayName: "food", description: "description" },
+    { name: "elctronics", displayName: "elctronics", description: "description" },
+    { name: "fasion", displayName: "fasion", description: "description" },
   ],
   active: "food",
 };
