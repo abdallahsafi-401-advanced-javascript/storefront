@@ -11,9 +11,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
-import { connect } from "react-redux";
+import { connect , useDispatch } from "react-redux";
 
 import { deleteProduct } from "../../store/cart";
+import { updateStock } from "../../store/products";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,12 @@ function ListItemLink(props) {
 
 const Simplecart = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  const deleteFromCart = async (product)=>{
+    props.deleteProduct(product)
+    await dispatch(updateStock(product, 1));
+  }
   return (
     <>
       {props.cart.length !== 0 && (
@@ -47,7 +53,7 @@ const Simplecart = (props) => {
                     <IconButton 
                     edge="end" 
                     aria-label="delete" 
-                    onClick={() => props.deleteProduct(item)}
+                    onClick={() => deleteFromCart(item)}
                     >
                       <DeleteIcon />
                     </IconButton>
