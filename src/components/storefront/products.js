@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React,{ useEffect } from "react";
+import { connect , useDispatch } from "react-redux";
 
 //Material ui
 //Grid
@@ -20,6 +20,9 @@ import Typography from "@material-ui/core/Typography";
 
 //action
 import { addProduct } from "../../store/cart";
+import { loadProducts } from "../../store/products";
+import { updateStock } from "../../store/products";
+
 
 
 const useStyles = makeStyles({
@@ -37,7 +40,22 @@ const useStyles = makeStyles({
 
 const Products = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const load = async () => {
+      // setIsLoading(true);
+      await dispatch(loadProducts());
+      // setIsLoading(false);
+    };
+    load();
+  }, [dispatch]);
+
+  const add = async (product)=>{
+    props.addProduct(product);
+    await dispatch(updateStock(product, 0));
+  }
+ 
   return (
     <Container>
       <h2 align="center">{props.active}</h2>
@@ -57,7 +75,7 @@ const Products = (props) => {
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
-                          {product.name}
+                          {product.name} ({product.inStock})
                         </Typography>
                         <Typography
                           variant="body2"
@@ -72,7 +90,7 @@ const Products = (props) => {
                       <Button 
                       size="small" 
                       className={classes.addCart}
-                      onClick={() => props.addProduct(product)}
+                      onClick={() => add(product)}
                       >
                         ADD TO CART
                       </Button>

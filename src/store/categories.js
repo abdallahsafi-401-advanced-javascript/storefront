@@ -1,10 +1,8 @@
+import axios from "axios";
+
 let initalState = {
-  categories: [
-    { name: "food", displayName: "food", description: "description" },
-    { name: "elctronics", displayName: "elctronics", description: "description" },
-    { name: "fasion", displayName: "fasion", description: "description" },
-  ],
-  active: "food",
+  categories: [],
+  active: "Electronics",
 };
 
 export default (state = initalState, action) => {
@@ -15,6 +13,8 @@ export default (state = initalState, action) => {
     case "UPDATE_ACTIVE":
       active = payload;
       return { active, categories };
+    case "SET_CATEGORIES":
+      return { ...state, categories: payload };
     default:
       return state;
   }
@@ -26,4 +26,26 @@ export const changeActive = (name) => {
     type: "UPDATE_ACTIVE",
     payload: name,
   };
+};
+
+export const setCategories = (categories) => {
+  return {
+    type: "SET_CATEGORIES",
+    payload: categories,
+  };
+};
+
+export const loadCategories = () => async (dispatch, getState) => {
+  axios
+    .get("https://as-app-server.herokuapp.com/api/v1/categories")
+    .then((res) => {
+      // handle success
+      console.log(res);
+        dispatch(setCategories(res.data.results));
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
+
 };

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { ButtonGroup } from "@material-ui/core";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { changeActive } from "../../store/categories";
+import { changeActive, loadCategories } from "../../store/categories";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Categories = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const load = async () => {
+      // setIsLoading(true);
+      await dispatch(loadCategories());
+      // setIsLoading(false);
+    };
+    load();
+  }, [dispatch]);
+
+ 
 
   return (
     <Container>
