@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: "#fff",
   },
+  cartLink:{
+    textDecoration: "none",
+
+  },
   cart: {
     backgroundColor: "#BB4430",
     "&:hover": {
@@ -49,9 +53,12 @@ const Header = (props) => {
           <Link to="/" className={classes.titleLink}>
             <Typography variant="h6" className={classes.title}>Store</Typography>
           </Link>
+
+          <Link to="/checkout" className={classes.cartLink} >
           <Button className={classes.cart} variant="contained">
             Cart ({props.cart.length})
           </Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

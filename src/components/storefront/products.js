@@ -52,7 +52,7 @@ const Products = (props) => {
 
   const add = async (product) => {
     props.addProduct(product);
-    await dispatch(updateStock(product, 0));
+    // await dispatch(updateStock(product, 0));
   };
 
   return (
