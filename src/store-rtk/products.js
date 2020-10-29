@@ -1,51 +1,21 @@
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let initalState = {
-  //category association, name, description, price, inventory count
-  products: [],
-  productDetails: {},
-};
-
-export default (state = initalState, action) => {
-  let { type, payload } = action;
-  let products = state.products;
-  switch (type) {
-    case "UPDATE_ACTIVEs":
-      let productsL = products.map((e) => {
-        if (e.category === payload) return e;
-      });
-      return { productsL };
-    case "SET_PRODUCTS":
-      return { ...state, products: payload };
-
-    case "SET_PRODUCTS_DETAILS":
-      return { ...state, productDetails: payload };
-    default:
-      return state;
-  }
-};
-
-// actions
-export const categoryChanged = (name) => {
-  return {
-    type: "GET_PRODUCTS",
-    payload: name,
-  };
-};
-
-export const setProducts = (products) => {
-  return {
-    type: "SET_PRODUCTS",
-    payload: products,
-  };
-};
-
-export const setProductDetails = (product) => {
-  return {
-    type: "SET_PRODUCTS_DETAILS",
-    payload: product,
-  };
-};
+const products = createSlice({
+  name: "products",
+  initialState: {
+    products: [],
+    productDetails: {},
+  },
+  reducers: {
+    setProducts(state, action) {
+      state.products = action.payload;
+    },
+    setProductDetails(state, action) {
+      state.productDetails = action.payload;
+    },
+  },
+});
 
 // Load all products
 export const loadProducts = () => async (dispatch, getState) => {
@@ -97,3 +67,7 @@ export const getProduct = (id) => async (dispatch, getState) => {
     dispatch(setProductDetails(res.data));
   });
 };
+
+export const { setProducts, setProductDetails } = products.actions;
+
+export default products.reducer;

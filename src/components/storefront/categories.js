@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { ButtonGroup } from "@material-ui/core";
 import { connect, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { changeActive, loadCategories } from "../../store/categories";
+import { updateActive, loadCategories } from "../../store-rtk/categories";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +49,7 @@ const Categories = (props) => {
               <Button
                 className={classes.buttons}
                 key={e.name}
-                onClick={() => props.changeActive(e.name)}
+                onClick={() => props.updateActive(e.name)}
               >
                 {e.name}
               </Button>
@@ -66,6 +66,6 @@ const mapStateToProps = (state) => ({
   active: state.categories.active,
 });
 
-const mapDispatchToProps = { changeActive };
+const mapDispatchToProps = { updateActive };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

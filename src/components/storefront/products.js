@@ -1,5 +1,6 @@
-import React,{ useEffect } from "react";
-import { connect , useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 //Material ui
 //Grid
@@ -19,23 +20,21 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 //action
-import { addProduct } from "../../store/cart";
-import { loadProducts } from "../../store/products";
-import { updateStock } from "../../store/products";
-
-
+import { addProduct } from "../../store-rtk/cart";
+import { loadProducts } from "../../store-rtk/products";
+import { updateStock } from "../../store-rtk/products";
 
 const useStyles = makeStyles({
   media: {
     height: 200,
   },
-  addCart:{
+  addCart: {
     color: "#BB4430",
   },
-  viewDetails:{
-    color: "#333"
-
-  }
+  viewDetails: {
+    color: "#333",
+    textDecoration: 'none'
+  },
 });
 
 const Products = (props) => {
@@ -51,11 +50,11 @@ const Products = (props) => {
     load();
   }, [dispatch]);
 
-  const add = async (product)=>{
+  const add = async (product) => {
     props.addProduct(product);
-    await dispatch(updateStock(product, 0));
-  }
- 
+    // await dispatch(updateStock(product, 0));
+  };
+
   return (
     <Container>
       <h2 align="center">{props.active}</h2>
@@ -87,16 +86,18 @@ const Products = (props) => {
                       </CardContent>
                     </CardActionArea>
                     <CardActions>
-                      <Button 
-                      size="small" 
-                      className={classes.addCart}
-                      onClick={() => add(product)}
+                      <Button
+                        size="small"
+                        className={classes.addCart}
+                        onClick={() => add(product)}
                       >
                         ADD TO CART
                       </Button>
-                      <Button size="small" className={classes.viewDetails}>
-                      VIEW DETAILS
-                      </Button>
+                      <Link to={`/details/${product._id}`} className={classes.viewDetails}>
+                        <Button size="small" >
+                          VIEW DETAILS
+                        </Button>
+                      </Link>
                     </CardActions>
                   </Card>
                 </Grid>

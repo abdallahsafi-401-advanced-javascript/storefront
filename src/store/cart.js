@@ -7,8 +7,12 @@ export default (state = initalState, action) => {
   let cart = state.cart;
   switch (type) {
     case "ADD_PRODUCT":
-      if (cart.indexOf(payload) <= -1 && payload.inStock > 0) {
+      let exist = cart.find((e) => {
+        return e._id === payload._id;
+      });
+      if (!exist && payload.inStock > 0) {
         cart = [...cart, payload];
+       
       }
       return { cart };
 
@@ -36,3 +40,4 @@ export const deleteProduct = (product) => {
     payload: product,
   };
 };
+
