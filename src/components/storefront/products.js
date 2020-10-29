@@ -20,9 +20,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 //action
-import { addProduct } from "../../store/cart";
-import { loadProducts } from "../../store/products";
-import { updateStock } from "../../store/products";
+import { addProduct } from "../../store-rtk/cart";
+import { loadProducts } from "../../store-rtk/products";
+import { updateStock } from "../../store-rtk/products";
 
 const useStyles = makeStyles({
   media: {

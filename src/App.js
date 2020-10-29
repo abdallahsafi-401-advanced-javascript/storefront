@@ -7,7 +7,7 @@ import Checkout from "./components/cart/checkout";
 import Footer from "./components/footer/footer";
 import ProductDetails from "./components/products/details";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store-rtk";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {

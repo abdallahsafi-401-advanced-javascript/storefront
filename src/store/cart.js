@@ -1,8 +1,3 @@
-import { updateStock } from "./products";
-
-
-
-
 let initalState = {
   cart: [],
 };

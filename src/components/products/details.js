@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import { getProduct } from "../../store/products";
+import { getProduct } from "../../store-rtk/products";
 import { makeStyles } from "@material-ui/core/styles";
 import Simplecart from "../cart/simplecart";
 
