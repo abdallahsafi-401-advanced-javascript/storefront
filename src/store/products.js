@@ -3,6 +3,7 @@ import axios from "axios";
 let initalState = {
   //category association, name, description, price, inventory count
   products: [],
+  productDetails: {},
 };
 
 export default (state = initalState, action) => {
@@ -16,6 +17,9 @@ export default (state = initalState, action) => {
       return { productsL };
     case "SET_PRODUCTS":
       return { ...state, products: payload };
+
+    case "SET_PRODUCTS_DETAILS":
+      return { ...state, productDetails: payload };
     default:
       return state;
   }
@@ -36,6 +40,14 @@ export const setProducts = (products) => {
   };
 };
 
+export const setProductDetails = (product) => {
+  return {
+    type: "SET_PRODUCTS_DETAILS",
+    payload: product,
+  };
+};
+
+// Load all products
 export const loadProducts = () => async (dispatch, getState) => {
   axios
     .get("https://as-app-server.herokuapp.com/api/v1/products")
@@ -50,7 +62,11 @@ export const loadProducts = () => async (dispatch, getState) => {
     });
 };
 
-export const updateStock = (product, operation) => async (dispatch, getState) => {
+// update stock when Items put in cart
+export const updateStock = (product, operation) => async (
+  dispatch,
+  getState
+) => {
   const products = getState().products;
   let theProduct = products.products.find((e) => {
     return e._id === product._id;
@@ -61,10 +77,23 @@ export const updateStock = (product, operation) => async (dispatch, getState) =>
     url: `https://as-app-server.herokuapp.com/api/v1/products/${theProduct._id}`,
     data: {
       inStock:
-      theProduct.inStock > 0 && operation === 0 ? theProduct.inStock - 1 : theProduct.inStock + 1,
+        theProduct.inStock > 0 && operation === 0
+          ? theProduct.inStock - 1
+          : theProduct.inStock + 1,
     },
   }).then(function (response) {
     console.log(response);
     dispatch(loadProducts());
+  });
+};
+
+// Load one product by Id
+export const getProduct = (id) => async (dispatch, getState) => {
+  axios({
+    method: "get",
+    url: `https://as-app-server.herokuapp.com/api/v1/products/${id}`,
+  }).then(function (res) {
+    console.log(res);
+    dispatch(setProductDetails(res.data));
   });
 };

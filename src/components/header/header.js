@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-
+import { Link } from "react-router-dom";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -20,8 +20,12 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  titleLink: {
     flexGrow: 1,
+    textDecoration: "none",
+  },
+  title: {
+    color: "#fff",
   },
   cart: {
     backgroundColor: "#BB4430",
@@ -42,15 +46,14 @@ const Header = (props) => {
           {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton> */}
-          <Typography variant="h6" className={classes.title}>
-            Store
-          </Typography>
+          <Link to="/" className={classes.titleLink}>
+            <Typography variant="h6" className={classes.title}>Store</Typography>
+          </Link>
           <Button className={classes.cart} variant="contained">
             Cart ({props.cart.length})
           </Button>
         </Toolbar>
       </AppBar>
-  
     </div>
   );
 };
